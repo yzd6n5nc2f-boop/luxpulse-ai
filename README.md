@@ -1,18 +1,17 @@
 # Innoweb LuxPulse UI Prototype
 
-This zip contains a runnable React + Vite + TypeScript scaffold for the LuxPulse UI prototype.
+This project contains a runnable React + Vite + TypeScript build of the LuxPulse UI prototype. The UI lives in
+`src/LuxPulseUIPrototype.tsx` and is rendered through `src/App.tsx`.
 
 ## How to run
 1. Install dependencies:
    npm install
 2. Start dev server:
    npm run dev
+3. Build for production (checks TypeScript and creates `dist/`):
+   npm run build
 
-## Important
-The full UI prototype currently lives in the ChatGPT Canvas document:
-**"Lux Pulse Ui Prototype (map + Monitoring)"**
-
-Because the canvas content is not directly accessible as a file from this environment, the `src/LuxPulseUIPrototype.tsx`
-file in this zip is a placeholder. Replace it with the full canvas code, then update `src/App.tsx` if needed.
-
-If you want, paste the canvas file here and I’ll regenerate the zip with the full code embedded.
+## Notes
+- The prototype showcases the monitoring dashboard: map markers, status breakdown, alert list, and charts for stability
+  and weather snapshots.
+- Build artifacts such as `dist/` and `tsconfig.tsbuildinfo` are excluded from version control.
