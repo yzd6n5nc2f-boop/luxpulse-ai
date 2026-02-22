@@ -5,6 +5,7 @@ import { SchedulesPage } from '../features/control/SchedulesPage';
 import { OverridesPage } from '../features/control/OverridesPage';
 import { EvidencePacksPage } from '../features/evidence/EvidencePacksPage';
 import { EventsPage } from '../features/events/EventsPage';
+import { InputDataPage } from '../features/input/InputDataPage';
 import { IntegrationsPage } from '../features/integrations/IntegrationsPage';
 import { ReportsPage } from '../features/reports/ReportsPage';
 import { SiteDashboardPage } from '../features/sites/SiteDashboardPage';
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: 'tickets', element: <TicketsPage /> },
       { path: 'control/schedules', element: <SchedulesPage /> },
       { path: 'control/overrides', element: <OverridesPage /> },
+      { path: 'input', element: <InputDataPage /> },
       { path: 'reports', element: <ReportsPage /> },
       { path: 'evidence-packs', element: <EvidencePacksPage /> },
       { path: 'integrations', element: <IntegrationsPage /> },

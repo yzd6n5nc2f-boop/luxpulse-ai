@@ -85,3 +85,26 @@ paths:
   /integrations/credentials/{credentialSetId}/rotate:
     post:
       summary: Rotate credential set
+  /input/tenants/{tenantId}/sites:
+    get:
+      summary: List input sites by tenant
+    post:
+      summary: Create input site with geo location
+  /input/tenants/{tenantId}/sites/{siteId}/floors:
+    post:
+      summary: Create floor definition for site
+  /input/tenants/{tenantId}/sites/{siteId}/zones:
+    post:
+      summary: Create zone definition for site
+  /input/assets:
+    post:
+      summary: Create asset and optional position (indoor XY or geo)
+  /input/assets/{assetId}/position:
+    patch:
+      summary: Update asset position record
+  /input/sites/{siteId}/layout:
+    get:
+      summary: Retrieve site layout with floors/zones/assets/positions
+  /input/tenants/{tenantId}/summary:
+    get:
+      summary: Input coverage summary for tenant

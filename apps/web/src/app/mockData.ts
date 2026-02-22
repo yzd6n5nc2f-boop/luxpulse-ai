@@ -279,6 +279,11 @@ export const siteData: SiteRecord[] = [
   },
 ];
 
+// Keep only a minimal demo baseline; operational data entry happens in the Input module.
+if (siteData.length > 2) {
+  siteData.splice(2);
+}
+
 const fallbackSite = siteData[0];
 if (!fallbackSite) {
   throw new Error('siteData must include at least one site');

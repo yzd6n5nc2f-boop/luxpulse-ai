@@ -25,7 +25,9 @@ Or run all services together:
 ## Default local URLs
 - Web UI: `http://localhost:5173`
 - API: `http://localhost:4000`
+- Input module: `http://localhost:5173/app/demo-tenant/input`
 
 ## Notes
 - Integrations are adapter-driven. Confirm protocol/API access per vendor/site.
 - Evidence packs are implementation outputs for reporting and traceability; no compliance guarantee is implied.
+- Input data entry is persisted in local SQLite at `data/luxpulse-inputs.db` via `/api/v1/input/*` endpoints.

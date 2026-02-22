@@ -7,3 +7,4 @@ dist
 build
 tsconfig.tsbuildinfo
 *.log
+data/

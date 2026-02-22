@@ -5,6 +5,7 @@ import { controlRoutes } from './modules/controlRoutes.js';
 import { coreRoutes } from './modules/coreRoutes.js';
 import { evidenceRoutes } from './modules/evidenceRoutes.js';
 import { integrationRoutes } from './modules/integrationRoutes.js';
+import { inputRoutes } from './modules/inputRoutes.js';
 
 const port = Number(process.env.PORT ?? 4000);
 const host = process.env.HOST ?? '0.0.0.0';
@@ -29,6 +30,7 @@ async function createServer() {
     await v1.register(controlRoutes);
     await v1.register(evidenceRoutes);
     await v1.register(integrationRoutes);
+    await v1.register(inputRoutes);
   }, { prefix: '/api/v1' });
 
   return app;

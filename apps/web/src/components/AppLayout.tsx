@@ -4,6 +4,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 const navItems = [
   { path: 'sites', label: 'Sites' },
+  { path: 'input', label: 'Input' },
   { path: 'events', label: 'Events/Faults' },
   { path: 'tickets', label: 'Tickets' },
   { path: 'control/schedules', label: 'Control' },
