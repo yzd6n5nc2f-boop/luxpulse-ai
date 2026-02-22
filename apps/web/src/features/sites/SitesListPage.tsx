@@ -1,6 +1,6 @@
 import { Building2, Crosshair, MapPinned, Radar, ZoomIn } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Area,
   AreaChart,
@@ -15,7 +15,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { buildStatusMix, getSiteById, siteData } from '../../app/mockData';
+import { CircleMarker, MapContainer, Polyline, Popup, TileLayer, useMap } from 'react-leaflet';
+import { buildStatusMix, getSiteById, siteData, type SiteAssetPoint, type SiteRecord } from '../../app/mockData';
 import { StatusBadge, Tag } from '../../components/StatusBadge';
 
 const statusPalette = {
@@ -25,25 +26,60 @@ const statusPalette = {
   Offline: '#6b7280',
 } as const;
 
-const zoneSlots = [
-  { left: 8, top: 10, width: 28, height: 35 },
-  { left: 39, top: 20, width: 26, height: 38 },
-  { left: 68, top: 12, width: 24, height: 46 },
-] as const;
+const osmTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const osmAttribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 type MapMode = 'region' | 'site';
+type LatLng = [number, number];
+
+function computeRegionCenter(sites: SiteRecord[]): LatLng {
+  const sums = sites.reduce(
+    (acc, site) => {
+      acc.lat += site.lat;
+      acc.lng += site.lng;
+      return acc;
+    },
+    { lat: 0, lng: 0 },
+  );
+
+  return [sums.lat / sites.length, sums.lng / sites.length];
+}
+
+function toLatLng(site: SiteRecord): LatLng {
+  return [site.lat, site.lng];
+}
+
+function toAssetLatLng(site: SiteRecord, asset: SiteAssetPoint): LatLng {
+  const latOffset = ((50 - asset.y) / 100) * 0.012;
+  const longitudeScale = Math.max(0.2, Math.cos((site.lat * Math.PI) / 180));
+  const lngOffset = (((asset.x - 50) / 100) * 0.018) / longitudeScale;
+
+  return [site.lat + latOffset, site.lng + lngOffset];
+}
+
+function FlyToSite({ center, zoom }: { center: LatLng; zoom: number }) {
+  const map = useMap();
+
+  const [lat, lng] = center;
+  useEffect(() => {
+    map.flyTo(center, zoom, { duration: 0.8 });
+  }, [map, lat, lng, zoom]);
+
+  return null;
+}
 
 export function SitesListPage() {
   const { tenantId } = useParams();
+  const navigate = useNavigate();
   const [selectedSiteId, setSelectedSiteId] = useState(siteData[0]?.id);
   const [mapMode, setMapMode] = useState<MapMode>('region');
 
   const selectedSite = getSiteById(selectedSiteId);
   const statusMix = useMemo(() => buildStatusMix(selectedSite.assetPoints), [selectedSite]);
-  const networkEdges = useMemo(
-    () => siteData.slice(1).map((site, index) => ({ from: siteData[index]!, to: site })),
-    [],
-  );
+  const regionCenter = useMemo(() => computeRegionCenter(siteData), []);
+  const networkPath = useMemo(() => siteData.map((site) => toLatLng(site)), []);
+  const selectedSiteCenter: LatLng = [selectedSite.lat, selectedSite.lng];
 
   const zoomToSite = (siteId: string) => {
     setSelectedSiteId(siteId);
@@ -90,80 +126,98 @@ export function SitesListPage() {
                 Zoom to {selectedSite.ref}
               </button>
               <Link className="btn-primary compact-link" to={`/app/${tenantId ?? 'demo-tenant'}/sites/${selectedSite.id}`}>
-                Open Full Site
+                Open Site Dashboard
               </Link>
             </div>
 
-            {mapMode === 'region' ? (
-              <div className="region-map-canvas">
-                <div className="site-map-grid" />
-                <svg className="network-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-                  {networkEdges.map((edge) => (
-                    <line
-                      key={`${edge.from.id}-${edge.to.id}`}
-                      x1={edge.from.mapX}
-                      y1={edge.from.mapY}
-                      x2={edge.to.mapX}
-                      y2={edge.to.mapY}
-                    />
+            <div className="leaflet-map-shell">
+              {mapMode === 'region' ? (
+                <MapContainer center={regionCenter} zoom={6} minZoom={5} maxZoom={9} scrollWheelZoom className="leaflet-map">
+                  <TileLayer attribution={osmAttribution} url={osmTileUrl} />
+                  <Polyline positions={networkPath} pathOptions={{ color: '#0a7ea4', opacity: 0.55, weight: 2 }} />
+                  {siteData.map((site) => (
+                    <CircleMarker
+                      key={site.id}
+                      center={toLatLng(site)}
+                      radius={site.id === selectedSite.id ? 11 : 8}
+                      pathOptions={{
+                        color: '#0a7ea4',
+                        weight: 2,
+                        fillColor: site.id === selectedSite.id ? '#0a7ea4' : '#1f9d55',
+                        fillOpacity: 0.9,
+                      }}
+                      eventHandlers={{ click: () => zoomToSite(site.id) }}
+                    >
+                      <Popup>
+                        <strong>{site.name}</strong>
+                        <br />
+                        Ref: {site.ref}
+                        <br />
+                        Offline: {site.offline}
+                        <br />
+                        Click marker to zoom into site.
+                      </Popup>
+                    </CircleMarker>
                   ))}
-                </svg>
-                {siteData.map((site) => (
-                  <button
-                    key={site.id}
-                    className={`region-site-dot ${site.id === selectedSite.id ? 'active' : ''}`}
-                    style={{ left: `${site.mapX}%`, top: `${site.mapY}%` }}
-                    onClick={() => zoomToSite(site.id)}
-                    type="button"
+                </MapContainer>
+              ) : (
+                <MapContainer
+                  center={selectedSiteCenter}
+                  zoom={15}
+                  minZoom={13}
+                  maxZoom={19}
+                  scrollWheelZoom
+                  className="leaflet-map"
+                >
+                  <TileLayer attribution={osmAttribution} url={osmTileUrl} />
+                  <FlyToSite center={selectedSiteCenter} zoom={15} />
+                  <CircleMarker
+                    center={selectedSiteCenter}
+                    radius={14}
+                    pathOptions={{ color: '#0a7ea4', fillColor: '#0a7ea4', fillOpacity: 0.35, weight: 2 }}
                   >
-                    <span className="region-dot-core" />
-                    <div className="region-site-label">
-                      <strong>{site.ref}</strong>
-                      <small>{site.name}</small>
-                    </div>
-                  </button>
-                ))}
-                <p className="map-footnote">Click a site marker to zoom into the site layout.</p>
-              </div>
-            ) : (
-              <div className="site-zoom-canvas">
-                <div className="site-map-grid" />
-                {selectedSite.zoneSummaries.map((zone, index) => {
-                  const slot = zoneSlots[index];
-                  if (!slot) {
-                    return null;
-                  }
-                  return (
-                    <div
-                      key={zone.id}
-                      className="zone-block active"
-                      style={{
-                        left: `${slot.left}%`,
-                        top: `${slot.top}%`,
-                        width: `${slot.width}%`,
-                        height: `${slot.height}%`,
+                    <Popup>
+                      <strong>{selectedSite.name}</strong>
+                      <br />
+                      Ref: {selectedSite.ref}
+                      <br />
+                      {selectedSite.lat.toFixed(4)}, {selectedSite.lng.toFixed(4)}
+                    </Popup>
+                  </CircleMarker>
+                  {selectedSite.assetPoints.map((asset) => (
+                    <CircleMarker
+                      key={asset.assetTag}
+                      center={toAssetLatLng(selectedSite, asset)}
+                      radius={5}
+                      pathOptions={{
+                        color: statusPalette[asset.status],
+                        fillColor: statusPalette[asset.status],
+                        fillOpacity: 0.94,
+                        weight: 1,
+                      }}
+                      eventHandlers={{
+                        click: () => navigate(`/app/${tenantId ?? 'demo-tenant'}/assets/${asset.assetTag}`),
                       }}
                     >
-                      <span>
-                        {zone.id.toUpperCase()} · {zone.name}
-                      </span>
-                    </div>
-                  );
-                })}
-                {selectedSite.assetPoints.map((asset) => (
-                  <Link
-                    key={asset.assetTag}
-                    to={`/app/${tenantId ?? 'demo-tenant'}/assets/${asset.assetTag}`}
-                    className={`asset-point point-${asset.status.toLowerCase()}`}
-                    style={{ left: `${asset.x}%`, top: `${asset.y}%` }}
-                    title={`${asset.assetTag} · ${asset.zoneLabel} · ${asset.status} · Last seen ${asset.lastSeen}`}
-                  >
-                    <span>{asset.assetTag}</span>
-                  </Link>
-                ))}
-                <p className="map-footnote">Live asset dots for {selectedSite.ref}. Click any dot to open the asset.</p>
-              </div>
-            )}
+                      <Popup>
+                        <strong>{asset.assetTag}</strong>
+                        <br />
+                        Zone: {asset.zoneLabel}
+                        <br />
+                        Status: {asset.status}
+                        <br />
+                        Last seen: {asset.lastSeen}
+                      </Popup>
+                    </CircleMarker>
+                  ))}
+                </MapContainer>
+              )}
+            </div>
+            <p className="map-footnote-inline">
+              {mapMode === 'region'
+                ? 'Click any site marker to zoom into that site.'
+                : `Viewing ${selectedSite.ref}. Click asset dots to open individual assets.`}
+            </p>
 
             <div className="site-metadata">
               <div className="key-value-grid">
@@ -186,9 +240,6 @@ export function SitesListPage() {
                   <strong>{selectedSite.ref}</strong>
                 </div>
               </div>
-              <Link className="btn-primary" to={`/app/${tenantId ?? 'demo-tenant'}/sites/${selectedSite.id}`}>
-                Open Site Dashboard
-              </Link>
             </div>
           </article>
 

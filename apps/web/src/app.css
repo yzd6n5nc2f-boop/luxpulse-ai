@@ -226,10 +226,10 @@ textarea {
   margin-left: auto;
 }
 
-.region-map-canvas,
-.site-zoom-canvas {
+.leaflet-map-shell {
   position: relative;
   min-height: 288px;
+  height: 332px;
   border-radius: 0.9rem;
   border: 1px solid var(--border);
   overflow: hidden;
@@ -239,90 +239,54 @@ textarea {
     linear-gradient(160deg, var(--surface-strong), var(--surface-alt));
 }
 
-.site-map-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(transparent 95%, rgba(255, 255, 255, 0.08) 95%),
-    linear-gradient(90deg, transparent 95%, rgba(255, 255, 255, 0.08) 95%);
-  background-size: 32px 32px;
-  opacity: 0.6;
-}
-
-.network-links {
-  position: absolute;
-  inset: 0;
+.leaflet-map-shell .leaflet-map,
+.leaflet-map-shell .leaflet-container {
   width: 100%;
   height: 100%;
 }
 
-.network-links line {
-  stroke: color-mix(in srgb, var(--accent) 55%, var(--border));
-  stroke-width: 0.35;
-  stroke-dasharray: 1 1;
-  opacity: 0.72;
-}
-
-.region-site-dot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  min-width: 112px;
-  border-radius: 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-  background: color-mix(in srgb, var(--surface) 84%, var(--accent-soft));
-  color: var(--text);
-  padding: 0.32rem 0.44rem;
-  display: inline-flex;
-  gap: 0.38rem;
-  align-items: center;
-  text-align: left;
-  cursor: pointer;
-  font-size: 0.7rem;
+.leaflet-map-shell .leaflet-control-zoom {
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
 }
 
-.region-dot-core {
-  width: 11px;
-  height: 11px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 32%, transparent);
+.leaflet-map-shell .leaflet-control-zoom a {
+  color: var(--text);
+  background: var(--surface);
+  border-bottom-color: var(--border);
 }
 
-.region-site-label {
-  display: grid;
-  gap: 0.06rem;
-}
-
-.region-site-label strong {
-  font-size: 0.71rem;
-}
-
-.region-site-label small {
-  color: var(--text-muted);
-  line-height: 1.25;
-}
-
-.region-site-dot.active {
-  border-color: var(--accent);
-  transform: translate(-50%, -50%) scale(1.02);
-}
-
-.site-zoom-canvas {
-  min-height: 332px;
-}
-
-.map-footnote {
-  position: absolute;
-  left: 0.65rem;
-  bottom: 0.55rem;
-  margin: 0;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  padding: 0.3rem 0.5rem;
-  border-radius: 0.52rem;
+.leaflet-map-shell .leaflet-popup-content-wrapper,
+.leaflet-map-shell .leaflet-popup-tip {
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-alt));
+  color: var(--text);
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 88%, var(--surface-alt));
+}
+
+.leaflet-map-shell .leaflet-popup-content {
+  margin: 8px 10px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.leaflet-map-shell .leaflet-control-attribution {
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  color: var(--text-muted);
+  border-top-left-radius: 0.5rem;
+}
+
+.leaflet-map-shell .leaflet-control-attribution a {
+  color: var(--accent);
+}
+
+.map-footnote-inline {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-alt));
 }
 
 .site-metadata {
@@ -717,13 +681,5 @@ textarea {
   .compact-link {
     margin-left: 0;
     width: 100%;
-  }
-
-  .region-site-dot {
-    min-width: 88px;
-  }
-
-  .region-site-label small {
-    display: none;
   }
 }
