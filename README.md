@@ -1,17 +1,31 @@
-# Innoweb LuxPulse UI Prototype
+# LuxPulse Monorepo
 
-This project contains a runnable React + Vite + TypeScript build of the LuxPulse UI prototype. The UI lives in
-`src/LuxPulseUIPrototype.tsx` and is rendered through `src/App.tsx`.
+Vendor-neutral lighting asset management platform scaffold for laptop-first MVP development.
 
-## How to run
-1. Install dependencies:
-   npm install
-2. Start dev server:
-   npm run dev
-3. Build for production (checks TypeScript and creates `dist/`):
-   npm run build
+## Workspace layout
+- `apps/web`: React + Vite operations UI with day/night themes and IA route skeleton.
+- `apps/api`: Fastify API stubs for canonical entities, control actions, evidence packs, and integrations.
+- `apps/worker`: Deterministic rules engine and evidence job placeholders.
+- `apps/simulator`: Simulated adapters for deterministic telemetry/event flows.
+- `packages/canonical-model`: Shared canonical entities, enums, and DTO contracts.
+- `packages/adapter-sdk`: Shared adapter lifecycle and retry/DLQ interfaces.
+- `migrations`: SQL schema and seed migrations with append-only audit semantics.
+- `infra/docker-compose.yml`: Local Postgres + Redis + MinIO services.
+
+## Quick start
+1. `npm install`
+2. `npm run dev:web`
+3. `npm run dev:api`
+4. `npm run dev:worker`
+5. `npm run dev:simulator`
+
+Or run all services together:
+- `npm run dev`
+
+## Default local URLs
+- Web UI: `http://localhost:5173`
+- API: `http://localhost:4000`
 
 ## Notes
-- The prototype showcases the monitoring dashboard: map markers, status breakdown, alert list, and charts for stability
-  and weather snapshots.
-- Build artifacts such as `dist/` and `tsconfig.tsbuildinfo` are excluded from version control.
+- Integrations are adapter-driven. Confirm protocol/API access per vendor/site.
+- Evidence packs are implementation outputs for reporting and traceability; no compliance guarantee is implied.

@@ -1,0 +1,87 @@
+openapi: 3.1.0
+info:
+  title: LuxPulse API (MVP Scaffold)
+  version: 0.1.0
+servers:
+  - url: http://localhost:4000/api/v1
+paths:
+  /tenants:
+    get:
+      summary: List tenants
+    post:
+      summary: Create tenant
+  /tenants/{tenantId}/sites:
+    get:
+      summary: List sites by tenant
+    post:
+      summary: Create site
+  /tenants/{tenantId}/sites/{siteId}/zones:
+    get:
+      summary: List zones by site
+    post:
+      summary: Create zone
+  /tenants/{tenantId}/assets:
+    get:
+      summary: List assets by tenant
+    post:
+      summary: Create asset
+  /assets/{assetId}:
+    get:
+      summary: Get asset
+    patch:
+      summary: Update asset state
+  /telemetry/ingest:
+    post:
+      summary: Ingest telemetry from adapters
+  /events:
+    get:
+      summary: Query events
+  /events/{eventId}/acknowledge:
+    post:
+      summary: Acknowledge event
+  /tickets:
+    get:
+      summary: List tickets
+    post:
+      summary: Create ticket
+  /tickets/{ticketId}:
+    patch:
+      summary: Update ticket
+  /control/schedules:
+    post:
+      summary: Create schedule action (audited)
+  /control/schedules/apply:
+    post:
+      summary: Apply schedule action (audited)
+  /control/overrides:
+    post:
+      summary: Manual override action (audited)
+  /control/history:
+    get:
+      summary: Retrieve control history
+  /evidence-packs:
+    post:
+      summary: Create evidence pack job
+  /evidence-packs/{packId}:
+    get:
+      summary: Evidence pack status/details
+  /evidence-packs/{packId}/download:
+    get:
+      summary: Download evidence artifact reference
+  /snapshots/config:
+    get:
+      summary: Deterministic config snapshot at time T
+  /integrations/adapters:
+    get:
+      summary: List adapters
+    post:
+      summary: Register adapter
+  /integrations/adapters/{adapterId}/health:
+    get:
+      summary: Adapter health
+  /integrations/credentials:
+    post:
+      summary: Create credential set
+  /integrations/credentials/{credentialSetId}/rotate:
+    post:
+      summary: Rotate credential set
