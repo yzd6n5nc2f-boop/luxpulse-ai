@@ -1,0 +1,7 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M128 24C84.9218 24 50 58.9218 50 102C50 125.607 60.2282 141.516 71.5757 152.708C84.0947 165.055 91 182.723 91 204H165C165 182.723 171.905 165.055 184.424 152.708C195.772 141.516 206 125.607 206 102C206 58.9218 171.078 24 128 24Z" stroke="#0E5AA7" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M88 204H168" stroke="#0E5AA7" stroke-width="9" stroke-linecap="round"/>
+  <rect x="92" y="214" width="72" height="18" rx="9" stroke="#0E5AA7" stroke-width="9"/>
+  <rect x="101" y="236" width="54" height="16" rx="8" stroke="#0E5AA7" stroke-width="9"/>
+  <text x="128" y="139" text-anchor="middle" font-size="56" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#0E5AA7">AI</text>
+</svg>

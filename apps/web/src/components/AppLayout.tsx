@@ -20,9 +20,13 @@ export function AppLayout() {
   return (
     <div className="shell">
       <header className="topbar">
-        <div>
-          <p className="eyebrow">LuxPulse</p>
-          <h1>Lighting Operations Console</h1>
+        <div className="brand">
+          <img className="brand-logo" src="/luxlight-logo.svg" alt="LuxLight AI logo" />
+          <div className="brand-text">
+            <p className="eyebrow">LuxLight AI</p>
+            <h1>Lighting Operations Console</h1>
+            <p className="brand-subtitle">Standardized monitoring, control, and site evidence</p>
+          </div>
         </div>
         <div className="toolbar">
           <label className="field-inline">
