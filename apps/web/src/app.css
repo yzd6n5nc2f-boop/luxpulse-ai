@@ -149,6 +149,18 @@ h3 {
   align-items: center;
 }
 
+.user-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-alt) 85%, transparent);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.68rem;
+}
+
 .field-inline {
   display: flex;
   flex-direction: column;
@@ -667,6 +679,64 @@ h4 {
     radial-gradient(circle at 18% 28%, rgba(72, 190, 220, 0.18), transparent 26%),
     radial-gradient(circle at 75% 70%, rgba(31, 157, 85, 0.2), transparent 30%),
     var(--surface-alt);
+}
+
+.login-shell {
+  min-height: 100vh;
+  padding: 1.4rem;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 36%),
+    radial-gradient(circle at 78% 94%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 34%),
+    var(--bg);
+}
+
+.login-card {
+  width: min(440px, 96vw);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, var(--surface), var(--surface-alt));
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.15rem;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.login-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: color-mix(in srgb, var(--surface) 70%, var(--accent-soft));
+  padding: 0.15rem;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 1.24rem;
+  line-height: 1.1;
+}
+
+.login-subtitle {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.login-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.login-submit {
+  width: 100%;
 }
 
 .input-form {

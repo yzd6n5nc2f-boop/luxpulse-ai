@@ -1,5 +1,6 @@
-import { Moon, Sun } from 'lucide-react';
+import { LogOut, Moon, Sun } from 'lucide-react';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 import { useTheme } from '../theme/ThemeProvider';
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
 
 export function AppLayout() {
   const { theme, toggleTheme } = useTheme();
+  const { session, logout } = useAuth();
   const { tenantId } = useParams();
 
   return (
@@ -29,6 +31,7 @@ export function AppLayout() {
           </div>
         </div>
         <div className="toolbar">
+          <span className="user-pill">{session?.displayName ?? 'Operator'}</span>
           <label className="field-inline">
             Tenant
             <select defaultValue={tenantId ?? 'demo-tenant'}>
@@ -38,6 +41,10 @@ export function AppLayout() {
           <button className="btn-ghost" onClick={toggleTheme}>
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             {theme === 'dark' ? 'Day' : 'Night'} Theme
+          </button>
+          <button className="btn-ghost" onClick={logout}>
+            <LogOut size={16} />
+            Sign Out
           </button>
         </div>
       </header>
