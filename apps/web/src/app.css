@@ -106,8 +106,8 @@ h3 {
 }
 
 .brand-logo {
-  width: 112px;
-  height: 112px;
+  width: 90px;
+  height: 90px;
   display: block;
   object-fit: contain;
   padding: 0.2rem;
@@ -800,8 +800,8 @@ h4 {
   }
 
   .brand-logo {
-    width: 92px;
-    height: 92px;
+    width: 74px;
+    height: 74px;
   }
 
   .toolbar {
