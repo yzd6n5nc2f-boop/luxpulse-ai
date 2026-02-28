@@ -14,7 +14,13 @@
     "dev:simulator": "npm run dev --workspace @luxpulse/simulator",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "db:migrate": "./scripts/apply-migrations.sh"
+    "db:migrate": "./scripts/apply-migrations.sh",
+    "package:win": "npm run build --workspace @luxpulse/web && npx --yes pkg@5.8.1 scripts/windows-runtime.cjs --targets node18-win-x64 --output release/LuxLight-Console.exe --public"
+  },
+  "pkg": {
+    "assets": [
+      "apps/web/dist/**/*"
+    ]
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

@@ -1,0 +1,79 @@
+{
+  "sites": [
+    {
+      "id": "82354563-e73d-40ac-882d-a4e304fd2978",
+      "tenantId": "demo-tenant",
+      "siteRef": "LXP-UK-001",
+      "name": "London West Retail Park",
+      "region": "Greater London",
+      "timezone": "Europe/London",
+      "latitude": 51.5072,
+      "longitude": -0.1276,
+      "createdAt": "2026-02-27T18:20:27.491Z"
+    },
+    {
+      "id": "3355f037-c334-46c2-ad15-99202098e713",
+      "tenantId": "demo-tenant",
+      "siteRef": "LXP-UK-002",
+      "name": "Birmingham Logistics Hub",
+      "region": "West Midlands",
+      "timezone": "Europe/London",
+      "latitude": 52.4862,
+      "longitude": -1.8904,
+      "createdAt": "2026-02-27T18:20:27.492Z"
+    }
+  ],
+  "floors": [
+    {
+      "id": "9693045f-d98b-4e34-b89e-98841e2efaa7",
+      "tenantId": "demo-tenant",
+      "siteId": "82354563-e73d-40ac-882d-a4e304fd2978",
+      "floorRef": "GF",
+      "name": "Ground Floor",
+      "levelIndex": 0,
+      "widthMeters": 120,
+      "heightMeters": 90,
+      "createdAt": "2026-02-27T18:20:27.492Z"
+    }
+  ],
+  "zones": [
+    {
+      "id": "59f3a3f1-e906-4952-ab3d-32bff2295a29",
+      "tenantId": "demo-tenant",
+      "siteId": "82354563-e73d-40ac-882d-a4e304fd2978",
+      "floorId": "9693045f-d98b-4e34-b89e-98841e2efaa7",
+      "zoneRef": "Z-A",
+      "name": "Ground Floor Retail",
+      "zoneType": "retail",
+      "createdAt": "2026-02-27T18:20:27.492Z"
+    }
+  ],
+  "assets": [
+    {
+      "id": "4155cbc1-8266-4873-95c7-b9ea42d375c4",
+      "tenantId": "demo-tenant",
+      "siteId": "82354563-e73d-40ac-882d-a4e304fd2978",
+      "floorId": "9693045f-d98b-4e34-b89e-98841e2efaa7",
+      "zoneId": "59f3a3f1-e906-4952-ab3d-32bff2295a29",
+      "assetTag": "LUX-0001",
+      "serialNumber": "SN-100001",
+      "manufacturer": "VendorA",
+      "model": "Linear Bay D4",
+      "protocolType": "dali2",
+      "status": "OK",
+      "createdAt": "2026-02-27T18:20:27.492Z"
+    }
+  ],
+  "positions": [
+    {
+      "assetId": "4155cbc1-8266-4873-95c7-b9ea42d375c4",
+      "positionMode": "indoor_xy",
+      "xPct": 34,
+      "yPct": 42,
+      "latitude": null,
+      "longitude": null,
+      "source": "seed",
+      "updatedAt": "2026-02-27T18:20:27.492Z"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+LUXLIGHT AI - PROJECT HANDOFF
+Date: 2026-02-27
+Prepared for: External Share
+
+1) PROJECT STATUS
+- Monorepo scaffold is complete and running.
+- Frontend, backend API, worker, and simulator are wired.
+- Branding has been standardized to LuxLight AI with custom logo.
+- Login page and protected app routing are implemented.
+- Input module is implemented and writes user-entered data to SQLite.
+
+2) CORE DELIVERABLES COMPLETED
+- Region and site map experience (Leaflet + OpenStreetMap).
+- Clickable site markers and site-level asset drill-down markers.
+- Data Input module for:
+  - Site registration (ref, region, timezone, lat/lng)
+  - Floor creation
+  - Zone creation
+  - Asset creation
+  - Asset position capture (indoor XY or geo)
+- API endpoints for input workflows under /api/v1/input/*.
+- SQLite-backed input persistence at data/luxpulse-inputs.db.
+- Professional LuxLight header/branding refresh and logo integration.
+
+3) HOW TO RUN
+From terminal:
+cd /Users/mauriciojardim/luxpulse-ai && npm install && npm run dev
+
+4) URLS
+- Web app: http://localhost:5173
+- Login page: http://localhost:5173/login
+- Input module: http://localhost:5173/app/demo-tenant/input
+- API health: http://localhost:4000/health
+
+5) LOGIN
+- Current login is local session-based (frontend-only gate).
+- Use any email/password to sign in for demo use.
+
+6) MAIN APP AREAS
+- Sites (map + monitoring)
+- Input (site/floor/zone/asset data capture)
+- Events/Faults
+- Tickets
+- Control
+- Reports
+- Evidence Packs
+- Integrations
+
+7) KEY FILES
+- Frontend routes: apps/web/src/app/router.tsx
+- Login/auth: apps/web/src/auth/* and apps/web/src/features/auth/LoginPage.tsx
+- App shell: apps/web/src/components/AppLayout.tsx
+- Styling/theme: apps/web/src/app.css
+- Site mapping UI: apps/web/src/features/sites/SitesListPage.tsx
+- Input UI: apps/web/src/features/input/InputDataPage.tsx
+- Input API routes: apps/api/src/modules/inputRoutes.ts
+- Input database layer: apps/api/src/db/inputDb.ts
+
+8) NOTES
+- OpenStreetMap tile usage is suitable for development/prototype.
+- For production scale, use a managed tile provider with SLA/limits.
+- Node's built-in sqlite module logs an experimental warning; expected in this setup.
+
+9) NEXT RECOMMENDED STEP
+- Replace local login gate with backend auth (JWT/session cookie + RBAC).
+
